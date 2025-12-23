@@ -1,1 +1,1 @@
-module.exports = ['build/', 'dist/', 'scripts/']
+module.exports = ['build/', 'dist/', 'scripts/'];

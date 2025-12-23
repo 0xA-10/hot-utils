@@ -1,5 +1,5 @@
-import {describe, expect, it} from 'vitest';
-import {pMapFast} from '../../src/promise/map.js';
+import { describe, expect, it } from 'vitest';
+import { pMapFast } from '../../src/promise/map.js';
 
 describe('pMapFast', () => {
   it('maps array with async function', async () => {
@@ -32,7 +32,7 @@ describe('pMapFast', () => {
         await new Promise(r => setTimeout(r, 10));
         concurrent--;
       },
-      {concurrency: 2},
+      { concurrency: 2 },
     );
 
     expect(maxConcurrent).toBe(2);

@@ -1,5 +1,5 @@
-import {describe, expect, it} from 'vitest';
-import {partitionFast} from '../../src/array/partition.js';
+import { describe, expect, it } from 'vitest';
+import { partitionFast } from '../../src/array/partition.js';
 
 describe('partitionFast', () => {
   it('partitions array by predicate', () => {

@@ -1,5 +1,5 @@
-import {describe, expect, it} from 'vitest';
-import {pFilterFast} from '../../src/promise/filter.js';
+import { describe, expect, it } from 'vitest';
+import { pFilterFast } from '../../src/promise/filter.js';
 
 describe('pFilterFast', () => {
   it('filters array with async predicate', async () => {
@@ -35,7 +35,7 @@ describe('pFilterFast', () => {
         concurrent--;
         return true;
       },
-      {concurrency: 2},
+      { concurrency: 2 },
     );
 
     expect(maxConcurrent).toBe(2);

@@ -1,4 +1,4 @@
-import type {EqualityPredicate} from '../types.js';
+import type { EqualityPredicate } from '../types.js';
 
 /**
  * Remove duplicates from an array based on an equality predicate.

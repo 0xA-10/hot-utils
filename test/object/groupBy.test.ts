@@ -1,35 +1,35 @@
-import {describe, expect, it} from 'vitest';
-import {groupByFast} from '../../src/object/groupBy.js';
+import { describe, expect, it } from 'vitest';
+import { groupByFast } from '../../src/object/groupBy.js';
 
 describe('groupByFast', () => {
   it('groups items by key (Map)', () => {
     const items = [
-      {type: 'a', val: 1},
-      {type: 'b', val: 2},
-      {type: 'a', val: 3},
+      { type: 'a', val: 1 },
+      { type: 'b', val: 2 },
+      { type: 'a', val: 3 },
     ];
     const result = groupByFast(items, item => item.type);
     expect(result).toBeInstanceOf(Map);
     expect(result.get('a')).toEqual([
-      {type: 'a', val: 1},
-      {type: 'a', val: 3},
+      { type: 'a', val: 1 },
+      { type: 'a', val: 3 },
     ]);
-    expect(result.get('b')).toEqual([{type: 'b', val: 2}]);
+    expect(result.get('b')).toEqual([{ type: 'b', val: 2 }]);
   });
 
   it('groups items by key (Object)', () => {
     const items = [
-      {type: 'a', val: 1},
-      {type: 'b', val: 2},
-      {type: 'a', val: 3},
+      { type: 'a', val: 1 },
+      { type: 'b', val: 2 },
+      { type: 'a', val: 3 },
     ];
     const result = groupByFast(items, item => item.type, true);
     expect(result).not.toBeInstanceOf(Map);
     expect(result.a).toEqual([
-      {type: 'a', val: 1},
-      {type: 'a', val: 3},
+      { type: 'a', val: 1 },
+      { type: 'a', val: 3 },
     ]);
-    expect(result.b).toEqual([{type: 'b', val: 2}]);
+    expect(result.b).toEqual([{ type: 'b', val: 2 }]);
   });
 
   it('handles empty arrays (Map)', () => {

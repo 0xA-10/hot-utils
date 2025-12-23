@@ -1,5 +1,5 @@
-import {describe, expect, it} from 'vitest';
-import {findIndicesFast} from '../../src/array/findIndices.js';
+import { describe, expect, it } from 'vitest';
+import { findIndicesFast } from '../../src/array/findIndices.js';
 
 describe('findIndicesFast', () => {
   it('finds all matching indices', () => {

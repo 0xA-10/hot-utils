@@ -1,4 +1,4 @@
-import type {ArrayPredicate} from '../types.js';
+import type { ArrayPredicate } from '../types.js';
 
 /**
  * Split an array into two arrays based on a predicate.

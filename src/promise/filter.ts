@@ -1,5 +1,5 @@
-import type {AsyncPredicate} from '../types.js';
-import {pMapFast, type PMapOptions} from './map.js';
+import type { AsyncPredicate } from '../types.js';
+import { pMapFast, type PMapOptions } from './map.js';
 
 /**
  * Filter an array with async predicate, with optional concurrency limit.
@@ -14,6 +14,6 @@ export async function pFilterFast<T>(
   predicate: AsyncPredicate<T>,
   options: PMapOptions = {},
 ): Promise<T[]> {
-  const results = await pMapFast(items, async (item, i) => ({item, keep: await predicate(item, i)}), options);
+  const results = await pMapFast(items, async (item, i) => ({ item, keep: await predicate(item, i) }), options);
   return results.filter(r => r.keep).map(r => r.item);
 }

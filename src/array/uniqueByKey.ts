@@ -1,4 +1,4 @@
-import type {KeySelector} from '../types.js';
+import type { KeySelector } from '../types.js';
 
 /**
  * Remove duplicates from an array based on a key selector function.

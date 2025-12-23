@@ -1,5 +1,5 @@
-import {describe, expect, it, vi} from 'vitest';
-import {pRetryFast} from '../../src/promise/retry.js';
+import { describe, expect, it, vi } from 'vitest';
+import { pRetryFast } from '../../src/promise/retry.js';
 
 describe('pRetryFast', () => {
   it('returns result on first success', async () => {
@@ -26,7 +26,7 @@ describe('pRetryFast', () => {
           attempts++;
           throw new Error('always fail');
         },
-        {retries: 2},
+        { retries: 2 },
       ),
     ).rejects.toThrow('always fail');
     expect(attempts).toBe(3); // initial + 2 retries
@@ -41,7 +41,7 @@ describe('pRetryFast', () => {
         if (attempts < 2) throw new Error('fail');
         return 'success';
       },
-      {delay: 50},
+      { delay: 50 },
     );
     const elapsed = Date.now() - start;
     expect(elapsed).toBeGreaterThanOrEqual(40); // Allow some timing variance
@@ -61,7 +61,7 @@ describe('pRetryFast', () => {
         if (attempts < 3) throw new Error('fail');
         return 'success';
       },
-      {delay: delayFn},
+      { delay: delayFn },
     );
 
     expect(delays).toEqual([0, 1]);

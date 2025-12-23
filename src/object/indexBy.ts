@@ -1,4 +1,4 @@
-import type {KeySelector} from '../types.js';
+import type { KeySelector } from '../types.js';
 
 /**
  * Index array items by a key selector function.

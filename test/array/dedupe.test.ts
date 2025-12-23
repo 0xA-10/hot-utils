@@ -1,5 +1,5 @@
-import {describe, expect, it} from 'vitest';
-import {dedupeFast, uniqueFast} from '../../src/array/dedupe.js';
+import { describe, expect, it } from 'vitest';
+import { dedupeFast, uniqueFast } from '../../src/array/dedupe.js';
 
 describe('dedupeFast', () => {
   it('removes duplicate primitives', () => {
@@ -24,8 +24,8 @@ describe('dedupeFast', () => {
   });
 
   it('uses reference equality for objects', () => {
-    const obj1 = {id: 1};
-    const obj2 = {id: 1};
+    const obj1 = { id: 1 };
+    const obj2 = { id: 1 };
     expect(dedupeFast([obj1, obj2, obj1])).toEqual([obj1, obj2]);
   });
 });

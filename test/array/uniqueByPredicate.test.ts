@@ -1,16 +1,16 @@
-import {describe, expect, it} from 'vitest';
-import {uniqueByPredicateFast} from '../../src/array/uniqueByPredicate.js';
+import { describe, expect, it } from 'vitest';
+import { uniqueByPredicateFast } from '../../src/array/uniqueByPredicate.js';
 
 describe('uniqueByPredicateFast', () => {
   it('removes duplicates based on predicate', () => {
     const items = [
-      {id: 1, name: 'a'},
-      {id: 2, name: 'b'},
-      {id: 1, name: 'c'},
+      { id: 1, name: 'a' },
+      { id: 2, name: 'b' },
+      { id: 1, name: 'c' },
     ];
     expect(uniqueByPredicateFast(items, (a, b) => a.id === b.id)).toEqual([
-      {id: 1, name: 'a'},
-      {id: 2, name: 'b'},
+      { id: 1, name: 'a' },
+      { id: 2, name: 'b' },
     ]);
   });
 

@@ -1,14 +1,14 @@
-import {describe, expect, it} from 'vitest';
-import {pSettleFast} from '../../src/promise/settle.js';
+import { describe, expect, it } from 'vitest';
+import { pSettleFast } from '../../src/promise/settle.js';
 
 describe('pSettleFast', () => {
   it('settles all promises', async () => {
     const results = await pSettleFast([Promise.resolve(1), Promise.reject(new Error('fail')), Promise.resolve(3)]);
 
     expect(results).toHaveLength(3);
-    expect(results[0]).toEqual({status: 'fulfilled', value: 1});
-    expect(results[1]).toEqual({status: 'rejected', reason: expect.any(Error)});
-    expect(results[2]).toEqual({status: 'fulfilled', value: 3});
+    expect(results[0]).toEqual({ status: 'fulfilled', value: 1 });
+    expect(results[1]).toEqual({ status: 'rejected', reason: expect.any(Error) });
+    expect(results[2]).toEqual({ status: 'fulfilled', value: 3 });
   });
 
   it('handles empty array', async () => {

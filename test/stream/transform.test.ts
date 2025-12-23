@@ -1,7 +1,7 @@
-import {describe, expect, it} from 'vitest';
-import {Readable, Writable} from 'node:stream';
-import {pipeline} from 'node:stream/promises';
-import {createTransformFast, createFilterStreamFast, createMapStreamFast} from '../../src/stream/transform.js';
+import { describe, expect, it } from 'vitest';
+import { Readable, Writable } from 'node:stream';
+import { pipeline } from 'node:stream/promises';
+import { createTransformFast, createFilterStreamFast, createMapStreamFast } from '../../src/stream/transform.js';
 
 describe('createTransformFast', () => {
   it('transforms chunks', async () => {

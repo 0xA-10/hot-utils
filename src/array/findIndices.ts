@@ -1,4 +1,4 @@
-import type {ArrayPredicate} from '../types.js';
+import type { ArrayPredicate } from '../types.js';
 
 /**
  * Find all indices where predicate returns true.

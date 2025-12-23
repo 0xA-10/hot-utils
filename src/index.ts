@@ -1,16 +1,16 @@
 // Array utilities
 export {
   dedupeFast,
-  uniqueFast,
   filterFast,
   findIndicesFast,
   partitionFast,
   uniqueByKeyFast,
   uniqueByPredicateFast,
+  uniqueFast,
 } from './array/index.js';
 
 // Object utilities
-export {countByFast, groupByFast, indexByFast, mapKeysFast, mapObjectFast} from './object/index.js';
+export { countByFast, groupByFast, indexByFast, mapKeysFast, mapObjectFast } from './object/index.js';
 
 // Promise utilities
 export {

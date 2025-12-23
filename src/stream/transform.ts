@@ -1,4 +1,4 @@
-import {Transform, type TransformCallback, type TransformOptions} from 'node:stream';
+import { Transform, type TransformCallback, type TransformOptions } from 'node:stream';
 
 /**
  * Transform function signature for stream transformation.

@@ -1,5 +1,5 @@
-import {pipeline as nodePipeline} from 'node:stream/promises';
-import type {PipelineSource, PipelineTransform, PipelineDestination} from 'node:stream';
+import type { PipelineDestination, PipelineSource, PipelineTransform } from 'node:stream';
+import { pipeline as nodePipeline } from 'node:stream/promises';
 
 /**
  * Type-safe wrapper for stream pipeline.

@@ -1,5 +1,5 @@
-import {describe, expect, it} from 'vitest';
-import {filterFast} from '../../src/array/filter.js';
+import { describe, expect, it } from 'vitest';
+import { filterFast } from '../../src/array/filter.js';
 
 describe('filterFast', () => {
   it('filters array by predicate', () => {

@@ -26,7 +26,7 @@ export interface RetryOptions {
  * @throws Last error if all retries fail
  */
 export async function pRetryFast<T>(fn: () => Promise<T>, options: RetryOptions = {}): Promise<T> {
-  const {retries = 3, delay = 0, shouldRetry = () => true} = options;
+  const { retries = 3, delay = 0, shouldRetry = () => true } = options;
 
   let lastError: unknown;
   for (let attempt = 0; attempt <= retries; attempt++) {

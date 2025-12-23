@@ -1,4 +1,4 @@
-import type {AsyncMapper} from '../types.js';
+import type { AsyncMapper } from '../types.js';
 
 export interface PMapOptions {
   /**
@@ -21,7 +21,7 @@ export async function pMapFast<T, R>(
   mapper: AsyncMapper<T, R>,
   options: PMapOptions = {},
 ): Promise<R[]> {
-  const {concurrency = Infinity} = options;
+  const { concurrency = Infinity } = options;
   const results: R[] = new Array(items.length);
 
   if (concurrency === Infinity || concurrency >= items.length) {
@@ -35,7 +35,7 @@ export async function pMapFast<T, R>(
   }
 
   let index = 0;
-  const workers = Array.from({length: Math.min(concurrency, items.length)}, async () => {
+  const workers = Array.from({ length: Math.min(concurrency, items.length) }, async () => {
     while (index < items.length) {
       const i = index++;
       results[i] = await mapper(items[i]!, i);

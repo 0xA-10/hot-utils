@@ -1,4 +1,4 @@
-import type {KeySelector} from '../types.js';
+import type { KeySelector } from '../types.js';
 
 /**
  * Count occurrences of items by a key selector function.

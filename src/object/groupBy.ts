@@ -1,4 +1,4 @@
-import type {KeySelector, MapKeySelector} from '../types.js';
+import type { KeySelector, MapKeySelector } from '../types.js';
 
 /**
  * Group array items by a key selector function.

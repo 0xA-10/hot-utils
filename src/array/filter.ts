@@ -1,4 +1,4 @@
-import type {ArrayPredicate} from '../types.js';
+import type { ArrayPredicate } from '../types.js';
 
 /**
  * Filter an array using a for-loop for maximum performance.
