@@ -1,8 +1,8 @@
-import {readdir, rename} from 'node:fs/promises';
-import {join} from 'node:path';
+import { readdir, rename } from 'node:fs/promises';
+import { join } from 'node:path';
 
 async function renameFiles(dir) {
-  const entries = await readdir(dir, {withFileTypes: true});
+  const entries = await readdir(dir, { withFileTypes: true });
   for (const entry of entries) {
     const fullPath = join(dir, entry.name);
     if (entry.isDirectory()) {
