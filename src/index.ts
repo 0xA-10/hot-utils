@@ -4,10 +4,13 @@ export { intersectionByHot, intersectionHot, partitionHot, uniqueByKeyHot } from
 // Object utilities
 export {
   countByHot,
+  evolveHot,
+  type Evolver,
   groupByHot,
   indexByHot,
   mapKeysHot,
   mapObjectHot,
+  mapValuesHot,
   omitByHot,
   omitHot,
   pickByHot,

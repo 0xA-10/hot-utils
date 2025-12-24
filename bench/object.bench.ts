@@ -1,10 +1,12 @@
 import { Bench } from 'tinybench';
 import {
   countByHot,
+  evolveHot,
   groupByHot,
   indexByHot,
   mapKeysHot,
   mapObjectHot,
+  mapValuesHot,
   omitHot,
   pickHot,
 } from '../src/index.js';
@@ -22,6 +24,12 @@ const simpleObject = Object.fromEntries(
 );
 const keysToOmit = ['key1', 'key2', 'key3', 'key4', 'key5'] as const;
 const keysToPick = ['key1', 'key2', 'key3', 'key4', 'key5'] as const;
+const evolveObject = { a: 1, b: 2, c: { d: 3, e: 4 }, f: 'hello' };
+const evolveSpec = {
+  a: (x: number) => x * 2,
+  c: { d: (x: number) => x + 10 },
+  f: (s: string) => s.toUpperCase(),
+};
 
 suite
   .add('groupByHot Map (10k items)', () => {
@@ -42,12 +50,22 @@ suite
   .add('mapKeysHot (100 keys)', () => {
     mapKeysHot(simpleObject, k => k.toUpperCase());
   })
+  .add('mapValuesHot (100 keys)', () => {
+    mapValuesHot(simpleObject, v => v * 2);
+  })
   .add('mapObjectHot (100 keys)', () => {
-    mapObjectHot(simpleObject, v => v * 2);
+    mapObjectHot(
+      simpleObject,
+      k => k.toUpperCase(),
+      v => v * 2,
+    );
   })
   .add('omitHot (100 keys, omit 5)', () => {
     omitHot(simpleObject, keysToOmit);
   })
   .add('pickHot (100 keys, pick 5)', () => {
     pickHot(simpleObject, keysToPick);
+  })
+  .add('evolveHot (nested)', () => {
+    evolveHot(evolveSpec, evolveObject);
   });
