@@ -5,7 +5,6 @@ import { dirname, join } from 'node:path';
 // Import benchmark suites directly
 import { suite as arraySuite } from './array.bench.js';
 import { suite as objectSuite } from './object.bench.js';
-import { suite as promiseSuite } from './promise.bench.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const BASELINE_PATH = join(__dirname, 'baseline.json');
@@ -21,7 +20,6 @@ async function runBenchmarks(): Promise<BenchResult[]> {
   const suites = [
     { name: 'Array', suite: arraySuite },
     { name: 'Object', suite: objectSuite },
-    { name: 'Promise', suite: promiseSuite },
   ];
   const results: BenchResult[] = [];
 

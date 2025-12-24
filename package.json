@@ -1,9 +1,48 @@
 {
-  "name": "fast-utils",
+  "name": "hot-utils",
   "version": "0.1.0",
-  "description": "Performance-focused lodash-like utilities backed by vanilla JS",
+  "description": "Utilities optimized for hot paths - more efficient than lodash equivalents.",
+  "keywords": [
+    "utils",
+    "utilities",
+    "performance",
+    "lodash",
+    "hot",
+    "hotpath",
+    "hot path",
+    "hot paths",
+    "fast",
+    "mapKeys",
+    "mapObject",
+    "map fast"
+  ],
+  "author": "Tony Natelli <tony@suspended.systems>",
+  "license": "GPLv3",
+  "scripts": {
+    "build": "pnpm build:esm && pnpm build:cjs",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json && node scripts/rename-cjs.js",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "gts lint",
+    "fix": "gts fix",
+    "clean": "rm -rf dist",
+    "bench": "node --import tsx bench/run.ts",
+    "bench:baseline": "node --import tsx bench/run.ts --save-baseline",
+    "bench:ci": "node --import tsx bench/run.ts --ci",
+    "prepack": "pnpm build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "@vitest/coverage-v8": "^4.0.16",
+    "gts": "^7.0.0",
+    "tinybench": "^6.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.6.3",
+    "vitest": "^4.0.16"
+  },
   "type": "module",
-  "sideEffects": false,
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
@@ -37,66 +76,13 @@
         "types": "./dist/cjs/object/index.d.cts",
         "default": "./dist/cjs/object/index.cjs"
       }
-    },
-    "./stream": {
-      "import": {
-        "types": "./dist/esm/stream/index.d.ts",
-        "default": "./dist/esm/stream/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/stream/index.d.cts",
-        "default": "./dist/cjs/stream/index.cjs"
-      }
-    },
-    "./promise": {
-      "import": {
-        "types": "./dist/esm/promise/index.d.ts",
-        "default": "./dist/esm/promise/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/promise/index.d.cts",
-        "default": "./dist/cjs/promise/index.cjs"
-      }
     }
   },
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "pnpm build:esm && pnpm build:cjs",
-    "build:esm": "tsc -p tsconfig.esm.json",
-    "build:cjs": "tsc -p tsconfig.cjs.json && node scripts/rename-cjs.js",
-    "test": "vitest",
-    "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage",
-    "lint": "gts lint",
-    "fix": "gts fix",
-    "clean": "rm -rf dist",
-    "bench": "node --import tsx bench/run.ts",
-    "bench:baseline": "node --import tsx bench/run.ts --save-baseline",
-    "bench:ci": "node --import tsx bench/run.ts --ci",
-    "prepack": "pnpm build"
-  },
+  "sideEffects": false,
   "engines": {
     "node": ">=20"
-  },
-  "keywords": [
-    "utils",
-    "utilities",
-    "performance",
-    "lodash",
-    "fast"
-  ],
-  "author": "",
-  "license": "MIT",
-  "packageManager": "pnpm@10.7.0",
-  "devDependencies": {
-    "@types/node": "^22.7.5",
-    "@vitest/coverage-v8": "^4.0.16",
-    "gts": "^7.0.0",
-    "tinybench": "^6.0.0",
-    "tsx": "^4.21.0",
-    "typescript": "^5.6.3",
-    "vitest": "^4.0.16"
   }
 }

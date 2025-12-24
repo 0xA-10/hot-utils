@@ -8,7 +8,7 @@ import type { ArrayPredicate } from '../types.js';
  * @param predicate - Function that returns true/false for each item
  * @returns Tuple of [passing, failing] arrays
  */
-export function partitionFast<T>(arr: readonly T[], predicate: ArrayPredicate<T>): [T[], T[]] {
+export function partitionHot<T>(arr: readonly T[], predicate: ArrayPredicate<T>): [T[], T[]] {
   const pass: T[] = [];
   const fail: T[] = [];
   for (let i = 0; i < arr.length; i++) {

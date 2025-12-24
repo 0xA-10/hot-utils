@@ -5,7 +5,7 @@
  * @param mapper - Function that takes (value, key) and returns new value
  * @returns New object with transformed values
  */
-export function mapObjectFast<K extends PropertyKey, V, R>(
+export function mapObjectHot<K extends PropertyKey, V, R>(
   obj: Record<K, V>,
   mapper: (value: V, key: K) => R,
 ): Record<K, R> {

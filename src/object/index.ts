@@ -1,5 +1,7 @@
-export { countByFast } from './countBy.js';
-export { groupByFast } from './groupBy.js';
-export { indexByFast } from './indexBy.js';
-export { mapKeysFast } from './mapKeys.js';
-export { mapObjectFast } from './mapObject.js';
+export { countByHot } from './countBy.js';
+export { groupByHot } from './groupBy.js';
+export { indexByHot } from './indexBy.js';
+export { mapKeysHot } from './mapKeys.js';
+export { mapObjectHot } from './mapObject.js';
+export { omitHot, omitByHot } from './omit.js';
+export { pickHot, pickByHot } from './pick.js';

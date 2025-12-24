@@ -1,25 +1,23 @@
 import { Bench } from 'tinybench';
-import { dedupeFast, filterFast, findIndicesFast, partitionFast, uniqueByKeyFast } from '../src/index.js';
+import { intersectionHot, partitionHot, uniqueByKeyHot } from '../src/index.js';
 
 export const suite = new Bench({ time: 1000 });
 
 // Test data
 const largeArray = Array.from({ length: 10000 }, (_, i) => i % 100);
+const largeArray2 = Array.from({ length: 10000 }, (_, i) => (i + 50) % 100);
 const objectArray = Array.from({ length: 10000 }, (_, i) => ({ id: i, group: String(i % 10) }));
 
 suite
-  .add('dedupeFast (10k items, 100 unique)', () => {
-    dedupeFast(largeArray);
+  .add('partitionHot (10k items)', () => {
+    partitionHot(largeArray, x => x > 50);
   })
-  .add('filterFast (10k items)', () => {
-    filterFast(largeArray, x => x > 50);
+  .add('uniqueByKeyHot (10k objects)', () => {
+    uniqueByKeyHot(objectArray, x => x.group);
   })
-  .add('partitionFast (10k items)', () => {
-    partitionFast(largeArray, x => x > 50);
+  .add('uniqueByKeyHot string path (10k objects)', () => {
+    uniqueByKeyHot(objectArray, 'group');
   })
-  .add('findIndicesFast (10k items)', () => {
-    findIndicesFast(largeArray, x => x === 50);
-  })
-  .add('uniqueByKeyFast (10k objects)', () => {
-    uniqueByKeyFast(objectArray, x => x.group);
+  .add('intersectionHot (2 arrays, 10k each)', () => {
+    intersectionHot(largeArray, largeArray2);
   });

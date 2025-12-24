@@ -1,6 +1,3 @@
-export { dedupeFast, uniqueFast } from './dedupe.js';
-export { filterFast } from './filter.js';
-export { findIndicesFast } from './findIndices.js';
-export { partitionFast } from './partition.js';
-export { uniqueByKeyFast } from './uniqueByKey.js';
-export { uniqueByPredicateFast } from './uniqueByPredicate.js';
+export { intersectionHot, intersectionByHot } from './intersection.js';
+export { partitionHot } from './partition.js';
+export { uniqueByKeyHot } from './uniqueByKey.js';

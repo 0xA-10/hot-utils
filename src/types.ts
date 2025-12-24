@@ -25,16 +25,6 @@ export type ValueMapper<T, R> = (item: T, index: number) => R;
 export type ObjectMapper<K extends PropertyKey, V, R> = (value: V, key: K) => R;
 
 /**
- * Async predicate that can return boolean or Promise<boolean>.
- */
-export type AsyncPredicate<T> = (item: T, index: number) => Promise<boolean> | boolean;
-
-/**
- * Async mapper that can return R or Promise<R>.
- */
-export type AsyncMapper<T, R> = (item: T, index: number) => Promise<R> | R;
-
-/**
  * Equality predicate for comparing two items.
  */
 export type EqualityPredicate<T> = (a: T, b: T) => boolean;

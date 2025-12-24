@@ -1,14 +1,19 @@
-import type { KeySelector } from '../types.js';
+import { toIteratee, type Iteratee } from '../internal/iteratee.js';
 
 /**
- * Index array items by a key selector function.
+ * Index array items by a key selector.
  * Later items overwrite earlier items with the same key.
  *
  * @param arr - Input array
- * @param keySelector - Function that returns a key for each item
+ * @param iteratee - Function or property path string that returns a key for each item
  * @returns Object mapping key to item
+ *
+ * @example
+ * indexByHot(users, 'id')
+ * indexByHot(users, user => user.email)
  */
-export function indexByFast<T, K extends PropertyKey>(arr: readonly T[], keySelector: KeySelector<T, K>): Record<K, T> {
+export function indexByHot<T, K extends PropertyKey>(arr: readonly T[], iteratee: Iteratee<T, K>): Record<K, T> {
+  const keySelector = toIteratee(iteratee);
   const result = {} as Record<K, T>;
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i]!;
