@@ -17,7 +17,7 @@
     "map fast"
   ],
   "author": "Tony Natelli <tony@suspended.systems>",
-  "license": "GPLv3",
+  "license": "MIT",
   "scripts": {
     "build": "pnpm build:esm && pnpm build:cjs",
     "build:esm": "tsc -p tsconfig.esm.json",
