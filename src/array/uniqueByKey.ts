@@ -22,13 +22,15 @@ import { toIteratee, type Iteratee } from '../internal/iteratee.js';
  */
 export function uniqueByKeyHot<T, K extends PropertyKey>(arr: readonly T[], iteratee: Iteratee<T, K>): T[] {
   const keySelector = toIteratee(iteratee);
-  const seen = new Map<K, T>();
+  const seen: Record<PropertyKey, T> = {};
+
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i]!;
     const key = keySelector(item, i);
-    if (!seen.has(key)) {
-      seen.set(key, item);
+    if (!(key in seen)) {
+      seen[key] = item;
     }
   }
-  return [...seen.values()];
+
+  return Object.values(seen);
 }

@@ -14,28 +14,58 @@ export function intersectionHot<T>(...arrays: readonly T[][]): T[] {
   if (arrays.length === 0) return [];
   if (arrays.length === 1) return [...arrays[0]!];
 
-  // Start with smallest array for efficiency
+  const arr1 = arrays[0]!;
+
+  // Optimized path for 2 arrays (most common case)
+  if (arrays.length === 2) {
+    const set2 = new Set(arrays[1]!);
+    const result: T[] = [];
+
+    // Delete from set2 after match to handle duplicates in arr1
+    // This avoids needing a separate "seen" Set
+    for (let i = 0; i < arr1.length; i++) {
+      const item = arr1[i]!;
+      if (set2.delete(item)) {
+        result.push(item);
+      }
+    }
+    return result;
+  }
+
+  // Multi-array path: build Sets without intermediate arrays
+  const otherSets: Set<T>[] = [];
   let smallestIdx = 0;
+  let smallestLen = arr1.length;
+
   for (let i = 1; i < arrays.length; i++) {
-    if (arrays[i]!.length < arrays[smallestIdx]!.length) {
+    const arr = arrays[i]!;
+    otherSets.push(new Set(arr));
+    if (arr.length < smallestLen) {
+      smallestLen = arr.length;
       smallestIdx = i;
     }
   }
 
-  const otherSets = arrays.filter((_, i) => i !== smallestIdx).map(arr => new Set(arr));
+  // If first array isn't smallest, add it to sets and use smallest for iteration
+  let iterateArr: readonly T[];
+  if (smallestIdx === 0) {
+    iterateArr = arr1;
+  } else {
+    otherSets[smallestIdx - 1] = new Set(arr1);
+    iterateArr = arrays[smallestIdx]!;
+  }
 
   const result: T[] = [];
   const seen = new Set<T>();
-  const smallest = arrays[smallestIdx]!;
 
-  for (let i = 0; i < smallest.length; i++) {
-    const item = smallest[i]!;
+  for (let i = 0; i < iterateArr.length; i++) {
+    const item = iterateArr[i]!;
     if (seen.has(item)) continue;
     seen.add(item);
 
     let inAll = true;
-    for (const otherSet of otherSets) {
-      if (!otherSet.has(item)) {
+    for (let j = 0; j < otherSets.length; j++) {
+      if (!otherSets[j]!.has(item)) {
         inAll = false;
         break;
       }
@@ -70,16 +100,14 @@ export function intersectionByHot<T>(arr1: readonly T[], arr2: readonly T[], ite
   }
 
   const result: T[] = [];
-  const seenKeys = new Set<unknown>();
 
+  // Delete from otherKeys after match to handle duplicates in arr1
+  // This avoids needing a separate "seenKeys" Set
   for (let i = 0; i < arr1.length; i++) {
     const item = arr1[i]!;
     const key = selector(item, i);
 
-    if (seenKeys.has(key)) continue;
-    seenKeys.add(key);
-
-    if (otherKeys.has(key)) {
+    if (otherKeys.delete(key)) {
       result.push(item);
     }
   }

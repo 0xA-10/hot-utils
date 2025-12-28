@@ -6,6 +6,28 @@
  */
 
 /**
+ * Cache for parsed path strings to avoid repeated split() allocations.
+ * Limited size to prevent memory issues in long-running processes.
+ */
+const PATH_CACHE_LIMIT = 1000;
+const pathCache = new Map<string, string[]>();
+
+function parsePath(path: string): string[] {
+  let cached = pathCache.get(path);
+  if (cached) return cached;
+
+  cached = path.split('.');
+
+  // Evict oldest entries if cache is full
+  if (pathCache.size >= PATH_CACHE_LIMIT) {
+    const firstKey = pathCache.keys().next().value as string;
+    pathCache.delete(firstKey);
+  }
+  pathCache.set(path, cached);
+  return cached;
+}
+
+/**
  * Iteratee type that accepts function or property path string.
  */
 export type Iteratee<T, R> = ((item: T, index: number) => R) | keyof T | (string & {});
@@ -29,8 +51,8 @@ export function toIteratee<T, R>(iteratee: Iteratee<T, R>): (item: T, index: num
     return (item: T) => (item as Record<string, unknown>)[path] as R;
   }
 
-  // Deep path access
-  const keys = path.split('.');
+  // Deep path access (cached to avoid repeated allocations)
+  const keys = parsePath(path);
   return (item: T) => {
     let current: unknown = item;
     for (const key of keys) {
@@ -50,7 +72,7 @@ export function getPath<T, D = undefined>(
   path: string | readonly (string | number)[],
   defaultValue?: D,
 ): unknown | D {
-  const keys = typeof path === 'string' ? path.split('.') : path;
+  const keys = typeof path === 'string' ? parsePath(path) : path;
   let current: unknown = obj;
 
   for (const key of keys) {
@@ -66,7 +88,7 @@ export function getPath<T, D = undefined>(
  * Used by setHot utility.
  */
 export function setPath<T extends object>(obj: T, path: string | readonly (string | number)[], value: unknown): T {
-  const keys = typeof path === 'string' ? path.split('.') : path;
+  const keys = typeof path === 'string' ? parsePath(path) : path;
   if (keys.length === 0) return obj;
 
   const result = { ...obj } as Record<string, unknown>;
