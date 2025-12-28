@@ -14,7 +14,8 @@ import { toIteratee, type Iteratee } from '../internal/iteratee.js';
  */
 export function indexByHot<T, K extends PropertyKey>(arr: readonly T[], iteratee: Iteratee<T, K>): Record<K, T> {
   const keySelector = toIteratee(iteratee);
-  const result = {} as Record<K, T>;
+  // Use Object.create(null) to avoid prototype pollution (e.g., key === 'toString')
+  const result = Object.create(null) as Record<K, T>;
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i]!;
     result[keySelector(item, i)] = item;

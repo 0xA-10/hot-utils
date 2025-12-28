@@ -100,4 +100,40 @@ describe('setPath', () => {
     const result = setPath(obj, 'a.b', 10);
     expect(result).toEqual({ a: { b: 10, c: 2 } });
   });
+
+  it('creates arrays for numeric keys', () => {
+    const obj = {};
+    const result = setPath(obj, ['items', 0], 'first');
+    expect(result).toEqual({ items: ['first'] });
+    expect(Array.isArray((result as { items: unknown[] }).items)).toBe(true);
+  });
+
+  it('creates arrays for numeric string keys', () => {
+    const obj = {};
+    const result = setPath(obj, 'items.0', 'first');
+    expect(result).toEqual({ items: ['first'] });
+    expect(Array.isArray((result as { items: unknown[] }).items)).toBe(true);
+  });
+
+  it('creates nested arrays', () => {
+    const obj = {};
+    const result = setPath(obj, ['matrix', 0, 1], 'value');
+    // Setting index 1 creates sparse array with undefined at index 0
+    expect(result).toEqual({ matrix: [[undefined, 'value']] });
+    expect(Array.isArray((result as { matrix: unknown[][] }).matrix)).toBe(true);
+    expect(Array.isArray((result as { matrix: unknown[][] }).matrix[0])).toBe(true);
+  });
+
+  it('preserves existing arrays', () => {
+    const obj = { items: ['a', 'b'] };
+    const result = setPath(obj, ['items', 1], 'B');
+    expect(result).toEqual({ items: ['a', 'B'] });
+    expect(Array.isArray((result as { items: unknown[] }).items)).toBe(true);
+  });
+
+  it('handles mixed object and array paths', () => {
+    const obj = {};
+    const result = setPath(obj, ['users', 0, 'name'], 'Alice');
+    expect(result).toEqual({ users: [{ name: 'Alice' }] });
+  });
 });

@@ -35,4 +35,15 @@ describe('indexByHot', () => {
     });
     expect(indices).toEqual([0, 1, 2]);
   });
+
+  it('handles prototype property names as keys', () => {
+    // Ensure Object.create(null) prevents prototype pollution
+    const items = [
+      { name: 'toString', val: 1 },
+      { name: 'constructor', val: 2 },
+    ];
+    const result = indexByHot(items, item => item.name);
+    expect(result.toString).toEqual({ name: 'toString', val: 1 });
+    expect(result.constructor).toEqual({ name: 'constructor', val: 2 });
+  });
 });

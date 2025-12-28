@@ -24,4 +24,12 @@ describe('countByHot', () => {
     });
     expect(indices).toEqual([0, 1, 2]);
   });
+
+  it('handles prototype property names as keys', () => {
+    // Ensure Object.create(null) prevents prototype pollution
+    const items = [{ name: 'toString' }, { name: 'constructor' }, { name: 'toString' }];
+    const result = countByHot(items, item => item.name);
+    expect(result.toString).toBe(2);
+    expect(result.constructor).toBe(1);
+  });
 });

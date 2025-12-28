@@ -84,23 +84,42 @@ export function getPath<T, D = undefined>(
 }
 
 /**
+ * Check if a key represents an array index (non-negative integer).
+ */
+function isArrayIndex(key: string | number): boolean {
+  if (typeof key === 'number') return Number.isInteger(key) && key >= 0;
+  const num = Number(key);
+  return Number.isInteger(num) && num >= 0 && String(num) === key;
+}
+
+/**
  * Deep property setter.
  * Used by setHot utility.
+ * Creates arrays for numeric keys, objects for string keys.
  */
 export function setPath<T extends object>(obj: T, path: string | readonly (string | number)[], value: unknown): T {
   const keys = typeof path === 'string' ? parsePath(path) : path;
   if (keys.length === 0) return obj;
 
-  const result = { ...obj } as Record<string, unknown>;
-  let current = result;
+  const rootIsArray = Array.isArray(obj);
+  const result = rootIsArray ? [...obj] : { ...obj };
+  let current: Record<string | number, unknown> = result as Record<string | number, unknown>;
 
   for (let i = 0; i < keys.length - 1; i++) {
-    const key = String(keys[i]);
+    const key = keys[i]!;
+    const nextKey = keys[i + 1]!;
     const next = current[key];
-    current[key] = next !== null && next !== undefined && typeof next === 'object' ? { ...next } : {};
-    current = current[key] as Record<string, unknown>;
+
+    if (next !== null && next !== undefined && typeof next === 'object') {
+      // Clone existing object/array
+      current[key] = Array.isArray(next) ? [...next] : { ...next };
+    } else {
+      // Create new object or array based on next key
+      current[key] = isArrayIndex(nextKey) ? [] : {};
+    }
+    current = current[key] as Record<string | number, unknown>;
   }
 
-  current[String(keys[keys.length - 1])] = value;
+  current[keys[keys.length - 1]!] = value;
   return result as T;
 }

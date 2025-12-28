@@ -41,7 +41,8 @@ export function groupByHot<T, K>(
   const keySelector = toIteratee(iteratee as Iteratee<T, K>);
 
   if (asObject) {
-    const result = {} as Record<PropertyKey, T[]>;
+    // Use Object.create(null) to avoid prototype pollution (e.g., key === 'toString')
+    const result = Object.create(null) as Record<PropertyKey, T[]>;
     for (let i = 0; i < arr.length; i++) {
       const item = arr[i]!;
       const key = keySelector(item, i) as PropertyKey;

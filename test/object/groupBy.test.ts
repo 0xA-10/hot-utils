@@ -51,4 +51,19 @@ describe('groupByHot', () => {
     });
     expect(indices).toEqual([0, 1, 2]);
   });
+
+  it('handles prototype property names as keys (Object)', () => {
+    // Ensure Object.create(null) prevents prototype pollution
+    const items = [
+      { name: 'toString', val: 1 },
+      { name: 'constructor', val: 2 },
+      { name: 'toString', val: 3 },
+    ];
+    const result = groupByHot(items, item => item.name, true);
+    expect(result.toString).toEqual([
+      { name: 'toString', val: 1 },
+      { name: 'toString', val: 3 },
+    ]);
+    expect(result.constructor).toEqual([{ name: 'constructor', val: 2 }]);
+  });
 });

@@ -13,7 +13,8 @@ import { toIteratee, type Iteratee } from '../internal/iteratee.js';
  */
 export function countByHot<T, K extends PropertyKey>(arr: readonly T[], iteratee: Iteratee<T, K>): Record<K, number> {
   const keySelector = toIteratee(iteratee);
-  const result = {} as Record<K, number>;
+  // Use Object.create(null) to avoid prototype pollution (e.g., key === 'toString')
+  const result = Object.create(null) as Record<K, number>;
   for (let i = 0; i < arr.length; i++) {
     const key = keySelector(arr[i]!, i);
     result[key] = (result[key] ?? 0) + 1;

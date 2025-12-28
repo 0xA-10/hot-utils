@@ -22,7 +22,8 @@ import { toIteratee, type Iteratee } from '../internal/iteratee.js';
  */
 export function uniqueByKeyHot<T, K extends PropertyKey>(arr: readonly T[], iteratee: Iteratee<T, K>): T[] {
   const keySelector = toIteratee(iteratee);
-  const seen: Record<PropertyKey, T> = {};
+  // Use Object.create(null) to avoid prototype pollution (e.g., key === 'toString')
+  const seen: Record<PropertyKey, T> = Object.create(null);
 
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i]!;

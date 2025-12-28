@@ -31,4 +31,18 @@ describe('uniqueByKeyHot', () => {
     const items = [{ group: 1 }, { group: 2 }, { group: 1 }];
     expect(uniqueByKeyHot(items, item => item.group)).toHaveLength(2);
   });
+
+  it('handles prototype property names as keys', () => {
+    // Ensure Object.create(null) prevents prototype pollution
+    const items = [
+      { name: 'toString', val: 1 },
+      { name: 'constructor', val: 2 },
+      { name: 'toString', val: 3 },
+    ];
+    const result = uniqueByKeyHot(items, item => item.name);
+    expect(result).toEqual([
+      { name: 'toString', val: 1 },
+      { name: 'constructor', val: 2 },
+    ]);
+  });
 });

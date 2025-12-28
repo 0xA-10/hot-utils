@@ -30,4 +30,12 @@ describe('partitionHot', () => {
     const [evens] = partitionHot(['a', 'b', 'c', 'd'], (_, i) => i % 2 === 0);
     expect(evens).toEqual(['a', 'c']);
   });
+
+  it('handles sparse arrays (treats holes as undefined)', () => {
+    // eslint-disable-next-line no-sparse-arrays
+    const sparse = [1, , 3] as number[];
+    const [defined, undef] = partitionHot(sparse, x => x !== undefined);
+    expect(defined).toEqual([1, 3]);
+    expect(undef).toEqual([undefined]);
+  });
 });

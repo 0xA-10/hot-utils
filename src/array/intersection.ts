@@ -81,33 +81,101 @@ export function intersectionHot<T>(...arrays: readonly T[][]): T[] {
 
 /**
  * Like intersectionHot, but accepts an iteratee to determine comparison key.
+ * Supports variadic arrays like intersectionHot.
  *
- * @param arr1 - First array
- * @param arr2 - Second array
+ * @param arrays - Arrays to inspect (2 or more)
  * @param iteratee - Function or property path to derive comparison key
  * @returns New array of intersecting values (from first array)
  *
  * @example
  * intersectionByHot([{ id: 1 }, { id: 2 }], [{ id: 2 }, { id: 3 }], 'id')
  * // [{ id: 2 }]
+ *
+ * @example
+ * intersectionByHot([{ id: 1 }, { id: 2 }], [{ id: 2 }], [{ id: 2 }, { id: 3 }], 'id')
+ * // [{ id: 2 }]
  */
-export function intersectionByHot<T>(arr1: readonly T[], arr2: readonly T[], iteratee: Iteratee<T, unknown>): T[] {
-  const selector = toIteratee(iteratee);
-  const otherKeys = new Set<unknown>();
+export function intersectionByHot<T>(arr1: readonly T[], arr2: readonly T[], iteratee: Iteratee<T, unknown>): T[];
+export function intersectionByHot<T>(
+  arr1: readonly T[],
+  arr2: readonly T[],
+  arr3: readonly T[],
+  iteratee: Iteratee<T, unknown>,
+): T[];
+export function intersectionByHot<T>(
+  arr1: readonly T[],
+  arr2: readonly T[],
+  arr3: readonly T[],
+  arr4: readonly T[],
+  iteratee: Iteratee<T, unknown>,
+): T[];
+export function intersectionByHot<T>(...args: (readonly T[] | Iteratee<T, unknown>)[]): T[] {
+  if (args.length < 2) return [];
 
-  for (let i = 0; i < arr2.length; i++) {
-    otherKeys.add(selector(arr2[i]!, i));
+  const iteratee = args[args.length - 1] as Iteratee<T, unknown>;
+  const arrays = args.slice(0, -1) as unknown as readonly T[][];
+
+  if (arrays.length === 0) return [];
+  if (arrays.length === 1) return [...arrays[0]!];
+
+  const selector = toIteratee(iteratee);
+  const arr1 = arrays[0]!;
+
+  // Optimized path for 2 arrays (most common case)
+  if (arrays.length === 2) {
+    const otherKeys = new Set<unknown>();
+    const arr2 = arrays[1]!;
+
+    for (let i = 0; i < arr2.length; i++) {
+      otherKeys.add(selector(arr2[i]!, i));
+    }
+
+    const result: T[] = [];
+
+    // Delete from otherKeys after match to handle duplicates in arr1
+    for (let i = 0; i < arr1.length; i++) {
+      const item = arr1[i]!;
+      const key = selector(item, i);
+
+      if (otherKeys.delete(key)) {
+        result.push(item);
+      }
+    }
+
+    return result;
+  }
+
+  // Multi-array path: build key Sets for all other arrays
+  const otherKeySets: Set<unknown>[] = [];
+
+  for (let i = 1; i < arrays.length; i++) {
+    const arr = arrays[i]!;
+    const keySet = new Set<unknown>();
+    for (let j = 0; j < arr.length; j++) {
+      keySet.add(selector(arr[j]!, j));
+    }
+    otherKeySets.push(keySet);
   }
 
   const result: T[] = [];
+  const seenKeys = new Set<unknown>();
 
-  // Delete from otherKeys after match to handle duplicates in arr1
-  // This avoids needing a separate "seenKeys" Set
   for (let i = 0; i < arr1.length; i++) {
     const item = arr1[i]!;
     const key = selector(item, i);
 
-    if (otherKeys.delete(key)) {
+    if (seenKeys.has(key)) continue;
+    seenKeys.add(key);
+
+    let inAll = true;
+    for (let j = 0; j < otherKeySets.length; j++) {
+      if (!otherKeySets[j]!.has(key)) {
+        inAll = false;
+        break;
+      }
+    }
+
+    if (inAll) {
       result.push(item);
     }
   }

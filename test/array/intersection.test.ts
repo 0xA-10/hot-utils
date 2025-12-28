@@ -53,4 +53,26 @@ describe('intersectionByHot', () => {
     const arr2 = [{ id: 1 }, { id: 2 }];
     expect(intersectionByHot(arr1, arr2, 'id')).toEqual([{ id: 1 }, { id: 2 }]);
   });
+
+  it('supports variadic arrays (3 arrays)', () => {
+    const arr1 = [{ id: 1 }, { id: 2 }, { id: 3 }];
+    const arr2 = [{ id: 2 }, { id: 3 }, { id: 4 }];
+    const arr3 = [{ id: 3 }, { id: 4 }, { id: 5 }];
+    expect(intersectionByHot(arr1, arr2, arr3, 'id')).toEqual([{ id: 3 }]);
+  });
+
+  it('supports variadic arrays (4 arrays)', () => {
+    const arr1 = [{ id: 1 }, { id: 2 }, { id: 3 }];
+    const arr2 = [{ id: 2 }, { id: 3 }];
+    const arr3 = [{ id: 2 }, { id: 3 }, { id: 4 }];
+    const arr4 = [{ id: 2 }, { id: 5 }];
+    expect(intersectionByHot(arr1, arr2, arr3, arr4, 'id')).toEqual([{ id: 2 }]);
+  });
+
+  it('handles multi-array with empty result', () => {
+    const arr1 = [{ id: 1 }];
+    const arr2 = [{ id: 2 }];
+    const arr3 = [{ id: 3 }];
+    expect(intersectionByHot(arr1, arr2, arr3, 'id')).toEqual([]);
+  });
 });
