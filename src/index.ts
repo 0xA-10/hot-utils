@@ -5,15 +5,21 @@ export { intersectionByHot, intersectionHot, partitionHot, uniqueByKeyHot } from
 export {
   countByHot,
   evolveHot,
+  evolveHotFast,
   type Evolver,
   groupByHot,
   indexByHot,
   mapKeysHot,
+  mapKeysHotFast,
   mapObjectHot,
+  mapObjectHotFast,
   mapValuesHot,
+  mapValuesHotFast,
   omitByHot,
+  omitByHotFast,
   omitHot,
   pickByHot,
+  pickByHotFast,
   pickHot,
 } from './object/index.js';
 
