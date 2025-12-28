@@ -72,25 +72,25 @@ import { groupByHot, mapKeysHot } from 'hot-fns/object';
 
 ### Object
 
-| Function                            | Description                                |
-| ----------------------------------- | ------------------------------------------ |
-| `countByHot(arr, iteratee)`         | Count occurrences by key                   |
-| `evolveHot(spec, obj)`              | Ramda-style recursive transforms (O(1) iteration) |
-| `evolveHotFast(spec, obj)`          | Recursive transforms (~15% faster, O(n) memory)   |
-| `groupByHot(arr, iteratee, asObj)`  | Group by key (Map default, Object if true) |
-| `indexByHot(arr, iteratee)`         | Create lookup table                        |
-| `mapKeysHot(obj, mapper)`           | Transform object keys (O(1) iteration)     |
-| `mapKeysHotFast(obj, mapper)`       | Transform keys (~15% faster, O(n) memory)  |
-| `mapObjectHot(obj, keyFn, valueFn)` | Transform both keys and values             |
-| `mapObjectHotFast(obj, keyFn, valueFn)` | Transform both (~15% faster, O(n) memory) |
-| `mapValuesHot(obj, mapper)`         | Transform object values (O(1) iteration)   |
-| `mapValuesHotFast(obj, mapper)`     | Transform values (~15% faster, O(n) memory)|
-| `omitHot(obj, keys)`                | Exclude keys (spread + delete)             |
-| `omitByHot(obj, predicate)`         | Exclude by predicate (O(1) iteration)      |
-| `omitByHotFast(obj, predicate)`     | Exclude by predicate (~15% faster, O(n))   |
-| `pickHot(obj, keys)`                | Select keys                                |
-| `pickByHot(obj, predicate)`         | Select by predicate (O(1) iteration)       |
-| `pickByHotFast(obj, predicate)`     | Select by predicate (~15% faster, O(n))    |
+| Function                                | Description                                       |
+| --------------------------------------- | ------------------------------------------------- |
+| `countByHot(arr, iteratee)`             | Count occurrences by key                          |
+| `evolveHot(spec, obj)`                  | Ramda-style recursive transforms (O(1) iteration) |
+| `evolveHotFast(spec, obj)`              | Recursive transforms (~15% faster, O(n) memory)   |
+| `groupByHot(arr, iteratee, asObj)`      | Group by key (Map default, Object if true)        |
+| `indexByHot(arr, iteratee)`             | Create lookup table                               |
+| `mapKeysHot(obj, mapper)`               | Transform object keys (O(1) iteration)            |
+| `mapKeysHotFast(obj, mapper)`           | Transform keys (~15% faster, O(n) memory)         |
+| `mapObjectHot(obj, keyFn, valueFn)`     | Transform both keys and values                    |
+| `mapObjectHotFast(obj, keyFn, valueFn)` | Transform both (~15% faster, O(n) memory)         |
+| `mapValuesHot(obj, mapper)`             | Transform object values (O(1) iteration)          |
+| `mapValuesHotFast(obj, mapper)`         | Transform values (~15% faster, O(n) memory)       |
+| `omitHot(obj, keys)`                    | Exclude keys (spread + delete)                    |
+| `omitByHot(obj, predicate)`             | Exclude by predicate (O(1) iteration)             |
+| `omitByHotFast(obj, predicate)`         | Exclude by predicate (~15% faster, O(n))          |
+| `pickHot(obj, keys)`                    | Select keys                                       |
+| `pickByHot(obj, predicate)`             | Select by predicate (O(1) iteration)              |
+| `pickByHotFast(obj, predicate)`         | Select by predicate (~15% faster, O(n))           |
 
 ## Speed vs Memory: HotFast Variants
 
@@ -98,10 +98,10 @@ For object iteration functions (`mapKeys`, `mapValues`, `mapObject`, `pickBy`, `
 
 ### The Tradeoff
 
-| Approach | Iteration | Memory | Speed |
-|----------|-----------|--------|-------|
-| `for...in` + `hasOwn` | O(1) memory | No intermediate allocation | Baseline |
-| `Object.keys()` + indexed loop | O(n) memory | Allocates keys array | ~15% faster |
+| Approach                       | Iteration   | Memory                     | Speed       |
+| ------------------------------ | ----------- | -------------------------- | ----------- |
+| `for...in` + `hasOwn`          | O(1) memory | No intermediate allocation | Baseline    |
+| `Object.keys()` + indexed loop | O(n) memory | Allocates keys array       | ~15% faster |
 
 ### Benchmark Results (100-key object)
 
@@ -129,8 +129,8 @@ For object iteration functions (`mapKeys`, `mapValues`, `mapObject`, `pickBy`, `
 
 ```typescript
 import {
-  mapValuesHot,      // Memory-optimized (default)
-  mapValuesHotFast,  // Speed-optimized
+  mapValuesHot, // Memory-optimized (default)
+  mapValuesHotFast, // Speed-optimized
 } from 'hot-fns';
 
 // Use *Hot when:
@@ -153,12 +153,16 @@ The ~0.83 KB difference comes from `Object.keys()` allocating an intermediate ar
 ```typescript
 // mapValuesHot - O(1) iteration memory
 for (const key in obj) {
-  if (Object.hasOwn(obj, key)) { /* ... */ }
+  if (Object.hasOwn(obj, key)) {
+    /* ... */
+  }
 }
 
 // mapValuesHotFast - O(n) keys array allocation
-const keys = Object.keys(obj);  // ← allocates array of n keys
-for (let i = 0; i < keys.length; i++) { /* ... */ }
+const keys = Object.keys(obj); // ← allocates array of n keys
+for (let i = 0; i < keys.length; i++) {
+  /* ... */
+}
 ```
 
 The indexed loop is faster because V8 optimizes it better than `for...in`, but the keys array adds memory overhead proportional to the object size.
@@ -183,7 +187,3 @@ pnpm version patch|minor|major
 pnpm build
 npm publish
 ```
-
-## License
-
-MIT
