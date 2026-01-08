@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/0xA-10/hot-fns/compare/hot-fns-v0.1.3...hot-fns-v0.1.4) (2026-01-08)
+
+
+### Performance Improvements
+
+* global optimizations + benchmark against lodash/ramda/radash ([#4](https://github.com/0xA-10/hot-fns/issues/4)) ([8945867](https://github.com/0xA-10/hot-fns/commit/8945867b956c8984820a474468c90b0c02bd53e8))
+
 ## [0.1.3](https://github.com/0xA-10/hot-fns/compare/hot-fns-v0.1.2...hot-fns-v0.1.3) (2025-12-24)
 
 
