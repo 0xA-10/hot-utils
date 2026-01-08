@@ -1,0 +1,42 @@
+[
+  {
+    "operation": "partition (10k items)",
+    "bytes": 315544
+  },
+  {
+    "operation": "intersection (2x 10k primitives)",
+    "bytes": 842560
+  },
+  {
+    "operation": "uniqueBy (10k items)",
+    "bytes": 752
+  },
+  {
+    "operation": "groupBy (10k items)",
+    "bytes": 293112
+  },
+  {
+    "operation": "countBy (10k items)",
+    "bytes": 568
+  },
+  {
+    "operation": "indexBy (10k items)",
+    "bytes": 237112
+  },
+  {
+    "operation": "mapKeys (100 keys)",
+    "bytes": 20696
+  },
+  {
+    "operation": "mapValues (100 keys)",
+    "bytes": 13456
+  },
+  {
+    "operation": "omit (100 keys, omit 5)",
+    "bytes": 7208
+  },
+  {
+    "operation": "pick (100 keys, pick 5)",
+    "bytes": 256
+  }
+]

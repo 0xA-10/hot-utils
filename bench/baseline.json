@@ -1,77 +1,77 @@
 [
   {
     "name": "partitionHot (10k items)",
-    "opsPerSec": 23244.384980729825,
-    "margin": 0.5475530266651615
+    "opsPerSec": 19547.78597984772,
+    "margin": 0.6011060631452184
   },
   {
     "name": "uniqueByKeyHot (10k objects)",
-    "opsPerSec": 8118.754112076882,
-    "margin": 0.4459166039807835
+    "opsPerSec": 11590.313226919843,
+    "margin": 0.13088357280649
   },
   {
     "name": "uniqueByKeyHot string path (10k objects)",
-    "opsPerSec": 7645.509521246205,
-    "margin": 0.48594017289376307
+    "opsPerSec": 11088.301049841837,
+    "margin": 0.15643431853047737
   },
   {
     "name": "intersectionHot (2 arrays, 10k each)",
-    "opsPerSec": 6836.177391312085,
-    "margin": 0.3697262117721285
+    "opsPerSec": 8476.507286630429,
+    "margin": 0.16683681325514024
   },
   {
     "name": "groupByHot Map (10k items)",
-    "opsPerSec": 4866.508372179312,
-    "margin": 0.28006598371559877
+    "opsPerSec": 5990.901285539055,
+    "margin": 0.42287195381274206
   },
   {
     "name": "groupByHot Object (10k items)",
-    "opsPerSec": 9138.85340467744,
-    "margin": 0.32436631877250033
+    "opsPerSec": 9574.929259883951,
+    "margin": 0.4494223948222148
   },
   {
     "name": "groupByHot string path (10k items)",
-    "opsPerSec": 4757.624653864563,
-    "margin": 0.28849801428348426
+    "opsPerSec": 5744.981053181225,
+    "margin": 0.3954744568115175
   },
   {
     "name": "indexByHot (10k items)",
-    "opsPerSec": 7581.510101438427,
-    "margin": 0.48210185462523164
+    "opsPerSec": 8429.721569738602,
+    "margin": 0.464907509645863
   },
   {
     "name": "countByHot (10k items)",
-    "opsPerSec": 6166.690986292485,
-    "margin": 0.4069579685535048
+    "opsPerSec": 8317.658865080059,
+    "margin": 0.2499659500254208
   },
   {
     "name": "mapKeysHot (100 keys)",
-    "opsPerSec": 74033.9794182261,
-    "margin": 0.22498546069766387
+    "opsPerSec": 74183.2952898716,
+    "margin": 0.29199878534044793
   },
   {
     "name": "mapValuesHot (100 keys)",
-    "opsPerSec": 202050.38418847046,
-    "margin": 0.8711468421884132
+    "opsPerSec": 205109.82483266643,
+    "margin": 0.5843473141363408
   },
   {
     "name": "mapObjectHot (100 keys)",
-    "opsPerSec": 75787.97999699455,
-    "margin": 1.1219701526238597
+    "opsPerSec": 74777.7374177699,
+    "margin": 0.3523645666493498
   },
   {
     "name": "omitHot (100 keys, omit 5)",
-    "opsPerSec": 146210.578095443,
-    "margin": 0.5354598281103228
+    "opsPerSec": 326938.3311564285,
+    "margin": 0.6725794464467677
   },
   {
     "name": "pickHot (100 keys, pick 5)",
-    "opsPerSec": 3335844.3679172634,
-    "margin": 0.21211580035424527
+    "opsPerSec": 3491220.801633286,
+    "margin": 0.29901094118209226
   },
   {
     "name": "evolveHot (nested)",
-    "opsPerSec": 3066765.7092391774,
-    "margin": 0.35306482592564203
+    "opsPerSec": 3253489.4539701673,
+    "margin": 0.42224957811289443
   }
 ]
